@@ -514,9 +514,9 @@ public class ImmoService {
 	 */
 	public void addTestData() {
 		//Hibernate Session erzeugen
-		Session session = sessionFactory.openSession();
-		
-		session.beginTransaction();
+//		Session session = sessionFactory.openSession();
+//		
+//		session.beginTransaction();
 		
 		Makler m = new Makler();
 		m.setName("Max Mustermann");
@@ -526,10 +526,10 @@ public class ImmoService {
 		
 		//TODO: Dieser Makler wird im Speicher und der DB gehalten
 		this.addMakler(m);
-		session.save(m);
-		session.getTransaction().commit();
-
-		session.beginTransaction();
+//		session.save(m);
+//		session.getTransaction().commit();
+//
+//		session.beginTransaction();
 		
 		Person p1 = new Person();
 		p1.setAdresse("Informatikum");
@@ -542,16 +542,16 @@ public class ImmoService {
 		p2.setNachname("Albers");
 		p2.setVorname("Hans");
 		
-		session.save(p1);
-		session.save(p2);
+//		session.save(p1);
+//		session.save(p2);
 		
 		//TODO: Diese Personen werden im Speicher und der DB gehalten
 		this.addPerson(p1);
 		this.addPerson(p2);
-		session.getTransaction().commit();
+//		session.getTransaction().commit();
 		
 		//Hibernate Session erzeugen
-		session.beginTransaction();
+//		session.beginTransaction();
 		Haus h = new Haus();
 		h.setOrt("Hamburg");
 		h.setPlz(22527);
@@ -563,14 +563,14 @@ public class ImmoService {
 		h.setGarten(true);
 		h.setVerwalter(m);
 		
-		session.save(h);
+//		session.save(h);
 		
 		//TODO: Dieses Haus wird im Speicher und der DB gehalten
 		this.addHaus(h);
-		session.getTransaction().commit();
+//		session.getTransaction().commit();
 		
 		//Hibernate Session erzeugen
-		session = sessionFactory.openSession();
+		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		Makler m2 = (Makler)session.get(Makler.class, m.getId());
 		Set<Immobilie> immos = m2.getImmobilien();

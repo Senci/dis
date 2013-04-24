@@ -349,14 +349,12 @@ public class ImmoService {
 //		}
 //		
 //		return ret;
-		
 		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
 		//List vertragsliste = (Kaufvertrag) session.get(Kaufvertrag.class, id);
 		List vertragsliste = session.createQuery(
-				"from Mietvertrag as mietvertrag, Wohnung as wohnung," +
-				" where Mietvertrag.haus = wohnung.id " +
-				"and from Wohnung where wohnung.verwalter = ?.")
+				"from  Mietvertrag mv where mv.haus = wg.id" +
+				" left join Wohnung wg where wg.verwalter = ?,")
 				.setEntity(0, m.getId())
 				.list();
 		session.getTransaction().commit();

@@ -47,16 +47,15 @@ public class ImmoService {
 	 * @return Makler mit der ID oder null
 	 */
 	public Makler getMaklerById(int id) {
-		Iterator<Makler> it = makler.iterator();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		
-		while(it.hasNext()) {
-			Makler m = it.next();
-			
-			if(m.getId() == id)
-				return m;
-		}
+		Makler makler = (Makler) session.get(Makler.class, id);
 		
-		return null;
+		session.getTransaction().commit();
+//		session.close();
+		
+		return makler;
 	}
 	
 	/**
@@ -65,23 +64,37 @@ public class ImmoService {
 	 * @return Makler mit der ID oder null
 	 */
 	public Makler getMaklerByLogin(String login) {
-		Iterator<Makler> it = makler.iterator();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		
-		while(it.hasNext()) {
-			Makler m = it.next();
-			
-			if(m.getLogin().equals(login))
-				return m;
-		}
+		Makler makler = (Makler) session.createQuery(
+			    "FROM Makler as makler WHERE makler.login=:login")
+			    .setParameter("login", login)
+				.uniqueResult();
 		
-		return null;
+		session.getTransaction().commit();
+//		session.close();
+
+		return makler;
 	}
 	
 	/**
 	 * Gibt alle Makler zurück
 	 */
 	public Set<Makler> getAllMakler() {
-		return makler;
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		List mList = session.createQuery(
+			    "FROM Makler")
+				.list();
+		
+		session.getTransaction().commit();
+//		session.close();
+		
+		Set<Makler> mSet = new HashSet<Makler>(mList);
+		
+		return mSet;
 	}
 	
 	/**
@@ -90,16 +103,15 @@ public class ImmoService {
 	 * @return Person mit der ID oder null
 	 */
 	public Person getPersonById(int id) {
-		Iterator<Person> it = personen.iterator();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		
-		while(it.hasNext()) {
-			Person p = it.next();
-			
-			if(p.getId() == id)
-				return p;
-		}
+		Person person = (Person) session.get(Person.class, id);
 		
-		return null;
+		session.getTransaction().commit();
+//		session.close();
+		
+		return person;
 	}
 	
 	/**
@@ -107,7 +119,13 @@ public class ImmoService {
 	 * @param m Der Makler
 	 */
 	public void addMakler(Makler m) {
-		makler.add(m);
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		session.save(m);
+		
+		session.getTransaction().commit();
+//		session.close();
 	}
 	
 	/**
@@ -115,7 +133,13 @@ public class ImmoService {
 	 * @param m Der Makler
 	 */
 	public void deleteMakler(Makler m) {
-		makler.remove(m);
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		session.delete(m);
+		
+		session.getTransaction().commit();
+//		session.close();
 	}
 	
 	/**
@@ -123,14 +147,32 @@ public class ImmoService {
 	 * @param p Die Person
 	 */
 	public void addPerson(Person p) {
-		personen.add(p);
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		session.save(p);
+		
+		session.getTransaction().commit();
+//		session.close();
 	}
 	
 	/**
 	 * Gibt alle Personen zurück
 	 */
 	public Set<Person> getAllPersons() {
-		return personen;
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		List pList = session.createQuery(
+			    "FROM Person")
+				.list();
+		
+		session.getTransaction().commit();
+//		session.close();
+		
+		Set<Person> pSet = new HashSet<Person>(pList);
+		
+		return pSet;
 	}
 	
 	/**
@@ -138,7 +180,13 @@ public class ImmoService {
 	 * @param p Die Person
 	 */
 	public void deletePerson(Person p) {
-		personen.remove(p);
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		session.delete(p);
+		
+		session.getTransaction().commit();
+//		session.close();
 	}
 	
 	/**
@@ -146,7 +194,13 @@ public class ImmoService {
 	 * @param h Das Haus
 	 */
 	public void addHaus(Haus h) {
-		haeuser.add(h);
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		session.save(h);
+		
+		session.getTransaction().commit();
+//		session.close();
 	}
 	
 	/**
@@ -174,16 +228,15 @@ public class ImmoService {
 	 * @return Das Haus oder null, falls nicht gefunden
 	 */
 	public Haus getHausById(int id) {
-		Iterator<Haus> it = haeuser.iterator();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		
-		while(it.hasNext()) {
-			Haus h = it.next();
-			
-			if(h.getId() == id)
-				return h;
-		}
+		Haus haus = (Haus) session.get(Haus.class, id);
 		
-		return null;
+		session.getTransaction().commit();
+//		session.close();
+		
+		return haus;
 	}
 	
 	/**
@@ -191,7 +244,13 @@ public class ImmoService {
 	 * @param p Das Haus
 	 */
 	public void deleteHouse(Haus h) {
-		haeuser.remove(h);
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		session.delete(h);
+		
+		session.getTransaction().commit();
+//		session.close();
 	}
 	
 	/**
@@ -199,7 +258,13 @@ public class ImmoService {
 	 * @param w die Wohnung
 	 */
 	public void addWohnung(Wohnung w) {
-		wohnungen.add(w);
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		session.save(w);
+		
+		session.getTransaction().commit();
+//		session.close();
 	}
 	
 	/**
@@ -227,16 +292,15 @@ public class ImmoService {
 	 * @return Die Wohnung oder null, falls nicht gefunden
 	 */
 	public Wohnung getWohnungById(int id) {
-		Iterator<Wohnung> it = wohnungen.iterator();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		
-		while(it.hasNext()) {
-			Wohnung w = it.next();
-			
-			if(w.getId() == id)
-				return w;
-		}
+		Wohnung wohnung = (Wohnung) session.get(Wohnung.class, id);
 		
-		return null;
+		session.getTransaction().commit();
+//		session.close();
+		
+		return wohnung;
 	}
 	
 	/**
@@ -244,7 +308,13 @@ public class ImmoService {
 	 * @param p Die Wohnung
 	 */
 	public void deleteWohnung(Wohnung w) {
-		wohnungen.remove(w);
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		session.delete(w);
+		
+		session.getTransaction().commit();
+//		session.close();
 	}
 	
 	

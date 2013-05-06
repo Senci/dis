@@ -30,8 +30,4 @@
 	</class>
 </hibernate-mapping>
 
-	private int stockwerk;
-	private int mietpreis;
-	private int zimmer;
-	private boolean balkon;
 	private boolean ebk;

@@ -10,19 +10,19 @@
 		<property name="datum" type="date" column="datum" />
 		<property name="ort" type="string" column="ort" />
 		<property name="vertragsnummer" type="integer" column="vertragsnummer" />
-		<many-to-one name="verwalter" class="de.dis2013.data.Makler" column="verwalter" not-null="true" />
+		<many-to-one name="vertragspartner" class="de.dis2013.data.Vertrag" column="vertragspartner" not-null="true" />
 		
-		<union-subclass name="de.dis2013.data.Kauvertrag" table="kaufvertraege">
+		<union-subclass name="de.dis2013.data.Kaufvertrag" table="kaufvertraege">
 			<property name="anzahlRaten" type="integer" column="anzahlRaten" />
 			<property name="ratenzins" type="integer" column="ratenzins" />
-			<one-to-one name="haus" class="de.dis2013.data.Haus" column="haus" not-null="true" />
+			<many-to-one name="haus" class="de.dis2013.data.Haus" column="haus" not-null="true" unique="true" />
 		</union-subclass>
 		
 		<union-subclass name="de.dis2013.data.Mietvertrag" table="mietvertraege">
 			<property name="mietbeginn" type="date" column="mietbeginn" />
 			<property name="dauer" type="integer" column="dauer" />
 			<property name="nebenkosten" type="integer" column="nebenkosten" />
-			<one-to-one name="wohnung" class="de.dis2013.data.Wohnung" column="wohnung" not-null="true" />
+			<many-to-one name="wohnung" class="de.dis2013.data.Wohnung" column="wohnung" not-null="true" unique="true" />
 		</union-subclass>
 	</class>
 </hibernate-mapping>

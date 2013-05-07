@@ -209,17 +209,18 @@ public class ImmoService {
 	 * @return Alle Häuser, die vom Makler verwaltet werden
 	 */
 	public Set<Haus> getAllHaeuserForMakler(Makler m) {
-		Set<Haus> ret = new HashSet<Haus>();
-		Iterator<Haus> it = haeuser.iterator();
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
 		
-		while(it.hasNext()) {
-			Haus h = it.next();
-			
-			if(h.getVerwalter().equals(m))
-				ret.add(h);
-		}
+		List hList = session.createQuery(
+			    "FROM Haus WHERE verwalter = :makler")
+			    .setParameter("makler", m)
+				.list();
 		
-		return ret;
+		session.getTransaction().commit();
+		Set<Haus> hSet = new HashSet<Haus>(hList);
+		
+		return hSet;
 	}
 	
 	/**

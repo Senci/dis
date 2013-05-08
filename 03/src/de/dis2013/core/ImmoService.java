@@ -124,6 +124,18 @@ public class ImmoService {
 	}
 	
 	/**
+	 * Aktualisiert einen Makler
+	 * @param m Der Makler
+	 */
+	public void updateMakler(Makler m) {
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		session.update(m);
+		session.getTransaction().commit();
+	}
+	
+	/**
 	 * Löscht einen Makler
 	 * @param m Der Makler
 	 */
@@ -146,6 +158,18 @@ public class ImmoService {
 		
 		session.save(p);
 		
+		session.getTransaction().commit();
+	}
+	
+	/**
+	 * Aktualisiert eine Person
+	 * @param m Die Person
+	 */
+	public void updatePerson(Person p) {
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		session.update(p);
 		session.getTransaction().commit();
 	}
 	
@@ -192,6 +216,20 @@ public class ImmoService {
 		
 		session.getTransaction().commit();
 	}
+	
+	/**
+	 * Aktualisiert ein Haus
+	 * @param h Das Haus
+	 */
+	public void updateHaus(Haus h) {
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		session.update(h);
+		session.getTransaction().commit();
+	}
+	
+
 	
 	/**
 	 * Gibt alle Häuser eines Maklers zurück
@@ -252,6 +290,18 @@ public class ImmoService {
 		
 		session.save(w);
 		
+		session.getTransaction().commit();
+	}
+	
+	/**
+	 * Aktualisiert eine Wohnung
+	 * @param w Die Wohnung
+	 */
+	public void updateWohnung(Wohnung w) {
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		session.update(w);
 		session.getTransaction().commit();
 	}
 	
